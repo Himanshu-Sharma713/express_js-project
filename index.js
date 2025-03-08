@@ -1,6 +1,7 @@
 // import files / folder
 import express from "express";
 import path from "node:path";
+import fs from "node:fs";
 
 // create metods
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.static(path.join(import.meta.dirname, "public")));
 
 // route
 app.get("/", (req, res) => {
+  
   res.render("index");
 });
 
