@@ -15,8 +15,24 @@ app.use(express.static(path.join(import.meta.dirname, "public")));
 
 // route
 app.get("/", (req, res) => {
-  
-  res.render("index");
+  fs.readdir(`files`, (err, files) => {
+    res.render("index", { files: files });
+  });
+});
+
+app.get("/files/:filename", (req, res) => {
+  fs.readFile(`/files/${req.params.filename}`, "utf-8", (err, fileData) => {
+    if (err) console.error("Error: ", err);
+    else res.render('show');
+  });
+});
+
+app.post("/create", (req, res) => {
+  fs.writeFile(
+    `./files/${req.body.title.split(" ").join("")}.txt`,
+    `${req.body.details}`,
+    res.redirect("/")
+  );
 });
 
 // create server rendering
